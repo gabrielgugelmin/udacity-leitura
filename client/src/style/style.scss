@@ -1,0 +1,20 @@
+@import 'ant';
+@import 'colors';
+@import 'header';
+@import 'vote';
+@import 'timeline';
+@import 'post';
+
+#root, .App {
+  height: 100%;
+}
+
+img {
+  max-width: 100%;
+}
+
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}

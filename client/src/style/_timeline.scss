@@ -1,0 +1,13 @@
+.timeline {
+  &__actions {
+    margin-bottom: 16px;
+
+    button {
+      margin-right: 8px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

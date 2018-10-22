@@ -1,0 +1,10 @@
+.header {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+
+  &__logo {
+    display: inline-block;
+    width: 120px;
+  }
+}

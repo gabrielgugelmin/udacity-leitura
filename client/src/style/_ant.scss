@@ -1,0 +1,25 @@
+// Resets
+.ant-layout {
+  min-height: 100%;
+}
+
+.ant-card-actions {
+  margin-left: 40px;
+  background: transparent;
+  border: 0;
+
+  a {
+    font-size: 12.9px;
+    font-weight: bold;
+  }
+
+  > li {
+    text-align: left;
+    margin: 0;
+
+    &:not(:last-child) {
+      border: 0;
+    }
+  }
+}
+
