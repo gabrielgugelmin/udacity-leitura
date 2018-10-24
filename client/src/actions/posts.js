@@ -1,30 +1,54 @@
-import { saveVote, getByCategory } from '../utils/api';
+import { saveVote, getByCategory, getPosts, savePost } from '../utils/api';
 
-export const RECEIVE_POSTS          = 'RECEIVE_POSTS';
-export const GET_POSTS_BY_CATEGORY  = 'GET_POSTS_BY_CATEGORY';
-export const VOTE_POST              = 'VOTE_POST';
+export const RECEIVE_POSTS = 'RECEIVE_POSTS';
+export const VOTE_POST     = 'VOTE_POST';
+export const ADD_POST      = 'ADD_POST';
 
-export function receivePosts(posts) {
+function addPost (post) {
   return {
-    type: RECEIVE_POSTS,
-    posts,
+    type: ADD_POST,
+    post,
   }
 }
 
-function getPostsByCategory(category, posts) {
-  return {
-    type: GET_POSTS_BY_CATEGORY,
-    category,
-    posts,
-  }
-}
-
-export function handleGetPostsByCategory(category) {
+export function handleAddPost(postInfo) {
   return (dispatch) => {
-    return getByCategory(category)
-      .then(posts =>
-        dispatch(getPostsByCategory(category, posts))
-      )
+    return savePost({
+      id: postInfo.id,
+      timestamp: postInfo.timestamp,
+      title: postInfo.title,
+      body: postInfo.body,
+      author: postInfo.author,
+      category: postInfo.category,
+    }).then((post) => dispatch(addPost(post)))
+  }
+}
+
+export function receivePosts(posts, category) {
+  if (category) {
+    return {
+      type: RECEIVE_POSTS,
+      category,
+      posts,
+    }
+  } else {
+    return {
+      type: RECEIVE_POSTS,
+      posts,
+    }
+  }
+}
+
+export function handleGetPosts(category) {
+  return (dispatch) => {
+    if (category) {
+      return getByCategory(category)
+        .then(posts => dispatch(receivePosts(posts, category)))
+    } else {
+      return getPosts()
+        .then(posts => dispatch(receivePosts(posts)))
+    }
+
   }
 }
 

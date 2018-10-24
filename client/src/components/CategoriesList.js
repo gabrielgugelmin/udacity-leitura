@@ -4,6 +4,16 @@ import { Link } from 'react-router-dom';
 import { List } from 'antd';
 
 class CategoriesList extends Component {
+
+  // componentDidMount() {
+  //   const { dispatch } = this.props;
+  //   dispatch(handleGetCategories());
+  // }
+
+  handleCategoryPosts = () => {
+    console.log(this.props.match.params.category)
+  }
+
   render() {
     const { categories } = this.props;
     return (
@@ -11,7 +21,11 @@ class CategoriesList extends Component {
         header={<h3>Categories</h3>}
         bordered
         dataSource={categories}
-        renderItem={category => (<List.Item><Link to={`/${category.path}`}>{category.name}</Link></List.Item>)}
+        renderItem={category => (
+          <List.Item>
+            <Link to={`/${category.path}`} >{category.name}</Link>
+          </List.Item>)
+        }
       />
     );
   }
@@ -19,7 +33,7 @@ class CategoriesList extends Component {
 
 function mapStateToProps({ categories }) {
   return {
-    categories: Object.values(categories)
+    categories: Object.values(categories),
   }
 }
 

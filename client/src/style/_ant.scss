@@ -3,6 +3,14 @@
   min-height: 100%;
 }
 
+.ant-list {
+  &-header {
+    h3 {
+      margin-bottom: 0;
+    }
+  }
+}
+
 .ant-card-actions {
   margin-left: 40px;
   background: transparent;
@@ -23,3 +31,7 @@
   }
 }
 
+.ant-skeleton-paragraph {
+  padding-left: 0;
+  margin-bottom: 0;
+}

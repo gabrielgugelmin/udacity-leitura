@@ -5,6 +5,10 @@
 
   &__logo {
     display: inline-block;
-    width: 120px;
+
+    img {
+      display: block;
+      width: 64px;
+    }
   }
 }

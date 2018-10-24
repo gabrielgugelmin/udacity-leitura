@@ -10,3 +10,16 @@ export function convertDate(timestamp) {
 
   return `${day}/${month}/${year}`;
 }
+
+// https://gist.github.com/gordonbrander/2230317
+export function generateID() {
+  return '_' + Math.random().toString(36).substr(2, 9);
+};
+
+// https://medium.com/dailyjs/rewriting-javascript-converting-an-array-of-objects-to-an-object-ec579cafbfc7
+export function arrayToObject (array, keyField) {
+  return array.reduce((obj, item) => {
+    obj[item[keyField]] = item
+    return obj
+  }, {})
+}

@@ -7,7 +7,7 @@ export function handleInitialData() {
   return (dispatch) => {
     return getInitialData()
       .then(({ posts, categories }) => {
-        dispatch(receivePosts(posts));
+        // dispatch(receivePosts(posts));
         dispatch(receiveCategories(categories));
       });
   }

@@ -1,3 +1,5 @@
+import { getCategories } from "../utils/api";
+
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
 
 export function receiveCategories(categories) {
@@ -6,3 +8,10 @@ export function receiveCategories(categories) {
     categories,
   }
 }
+
+// export function handleGetCategories() {
+//   return (dispatch) => {
+//     return getCategories()
+//       .then(categories => dispatch(receiveCategories(categories)))
+//   }
+// }

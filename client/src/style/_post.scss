@@ -11,11 +11,17 @@
 
   &__category {
     .anticon {
-      margin-right: 8px;
+      margin-right: 4px;
     }
 
     button {
       font-weight: bold;
+    }
+
+    &:hover {
+      button {
+        text-decoration: underline;
+      }
     }
   }
 

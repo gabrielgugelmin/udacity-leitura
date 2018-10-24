@@ -12,8 +12,8 @@ const headers = {
 
 export function getInitialData () {
   return Promise.all([
-    _getPosts(),
-    _getCategories(),
+    getPosts(),
+    getCategories(),
   ]).then(([posts, categories]) => ({
     posts,
     categories,
@@ -21,7 +21,7 @@ export function getInitialData () {
 }
 
 
-const _getPosts = () =>
+export const getPosts = () =>
   fetch(`${api}/posts`, { headers })
     .then(res => res.json())
 
@@ -29,7 +29,7 @@ export const getByCategory = (category) =>
   fetch(`${api}/${category}/posts`, { headers })
     .then(res => res.json())
 
-const _getCategories = () =>
+export const getCategories = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())
 
@@ -42,3 +42,13 @@ export const saveVote = ({id, vote}) =>
     },
     body: JSON.stringify(vote)
   }).then(res => res.json())
+
+export const savePost = (post) =>
+  fetch(`${api}/posts/`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(post)
+  }).then(res => { let x = res.json(); console.log('NOVO POST: ', res); return x;})

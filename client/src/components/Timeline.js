@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Post from './Post';
 import { sortPosts } from '../actions/sort';
 import { Button, Icon } from 'antd';
-import { handleGetPostsByCategory } from '../actions/posts';
+import { handleGetPosts } from '../actions/posts';
 
 class Timeline extends Component {
   state = {
@@ -12,12 +12,14 @@ class Timeline extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount')
-    const category = this.props.match.params.category;
     const { dispatch } = this.props;
+    dispatch(handleGetPosts(this.props.match.params.category));
+  }
 
-    if(category !== undefined) {
-      dispatch(handleGetPostsByCategory(category));
+  componentDidUpdate(prevProps) {
+    const { dispatch } = this.props;
+    if (this.props.match.params.category !== prevProps.match.params.category) {
+      dispatch(handleGetPosts(this.props.match.params.category));
     }
   }
 
@@ -38,7 +40,7 @@ class Timeline extends Component {
     return (
       <div className="timeline">
         <div className="timeline__actions">
-          <Button onClick={this.handleOrder} value="date">
+          <Button onClick={this.handleOrder} value="date" className={(this.state.sortBy === 'date') ? 'ant-btn-primary' : ''}>
             Order by date
             {
               (this.state.sortBy === 'date' && this.state.isAscending) && (
@@ -51,7 +53,7 @@ class Timeline extends Component {
               )
             }
           </Button>
-          <Button onClick={this.handleOrder} value="score">
+          <Button onClick={this.handleOrder} value="score" className={(this.state.sortBy === 'score') ? 'ant-btn-primary' : ''}>
             Order by score
             {
               (this.state.sortBy === 'score' && this.state.isAscending) && (
@@ -66,8 +68,8 @@ class Timeline extends Component {
           </Button>
         </div>
         {
-          this.props.postsIds.map((id) => (
-            <Post key={id} id={id}/>
+          this.props.posts.map((post) => (
+            <Post key={post.id} post={post}/>
           ))
         }
       </div>
@@ -77,19 +79,19 @@ class Timeline extends Component {
 
 function mapStateToProps({ posts, sort }) {
   return {
-    postsIds: Object.keys(posts)
+    posts: Object.values(posts)
       .sort((a, b) => {
         if (sort.sortBy === 'date') {
           if (sort.isAscending) {
-            return posts[a].timestamp - posts[b].timestamp;
+            return a.timestamp - b.timestamp;
           } else{
-            return posts[b].timestamp - posts[a].timestamp;
+            return b.timestamp - a.timestamp;
           }
         } else {
           if (sort.isAscending) {
-            return posts[a].voteScore - posts[b].voteScore;
+            return a.voteScore - b.voteScore;
           } else{
-            return posts[b].voteScore - posts[a].voteScore;
+            return b.voteScore - a.voteScore;
           }
         }
       })

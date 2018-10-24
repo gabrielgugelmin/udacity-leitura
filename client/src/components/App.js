@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { handleInitialData } from '../actions/shared';
 import Timeline from './Timeline';
 import Logo from './Logo';
@@ -8,8 +8,12 @@ import { Layout, Col, Row } from 'antd';
 import 'antd/dist/antd.css';
 import '../style/style.scss';
 import CategoriesList from './CategoriesList';
+import PostDetail from './PostDetail';
+import NewPostButton from './NewPostButton';
+import NewPost from './NewPost';
 
 class App extends Component {
+
   componentDidMount () {
     this.props.dispatch(handleInitialData());
   }
@@ -30,11 +34,16 @@ class App extends Component {
               <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
               <Row gutter={16}>
                 <Col className="gutter-row" span={16}>
-                  <Route path="/" exact component={Timeline} />
-                  <Route path="/:category" component={Timeline} />
+                  <Switch>
+                    <Route exact path="/" component={Timeline} />
+                    <Route path="/submit" component={NewPost} />
+                    <Route exact path="/:category" component={Timeline} />
+                    <Route path="/:category/:id" component={PostDetail} />
+                  </Switch>
                 </Col>
                 <Col className="gutter-row" span={8}>
-                  <CategoriesList/>
+                  <NewPostButton />
+                  <CategoriesList />
                 </Col>
               </Row>
               </div>

@@ -18,6 +18,10 @@
     cursor: pointer;
     transition: border-color .15s ease, color .15s ease;
 
+    * {
+      pointer-events: none;
+    }
+
     &:hover {
       &:first-child {
         border-color: $blue-5;
