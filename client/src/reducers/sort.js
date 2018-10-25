@@ -1,6 +1,11 @@
 import { SORT_POSTS } from "../actions/sort";
 
-export default function sort(state = {}, action) {
+const initialState = {
+  sortBy: 'date',
+  isAscending: true,
+}
+
+export default function sort(state = initialState, action) {
   switch (action.type) {
     case SORT_POSTS:
       return {

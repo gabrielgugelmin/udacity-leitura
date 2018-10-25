@@ -1,4 +1,4 @@
-import { getCategories } from "../utils/api";
+// import { getCategories } from "../utils/api";
 
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
 

@@ -1,8 +1,24 @@
-import { saveVote, getByCategory, getPosts, savePost } from '../utils/api';
+import { saveVote, getByCategory, getPost, getPosts, savePost } from '../utils/api';
 
+export const ADD_POST      = 'ADD_POST';
+export const GET_POST      = 'GET_POST';
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const VOTE_POST     = 'VOTE_POST';
-export const ADD_POST      = 'ADD_POST';
+
+function receivePost(post) {
+  return {
+    type: GET_POST,
+    post,
+  }
+}
+
+export function handleGetPost(id) {
+  return (dispatch) => {
+    return getPost(id)
+      .then(post => dispatch(receivePost(post)))
+  }
+}
+
 
 function addPost (post) {
   return {

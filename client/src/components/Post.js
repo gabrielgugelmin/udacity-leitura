@@ -1,84 +1,153 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import { Card, Icon } from 'antd';
-import { HeartIcon } from './Icons'
-import { convertDate } from '../utils/helpers';
-import { handleVotePost } from '../actions/posts';
+import { Link, Redirect } from 'react-router-dom';
+import { handleAddPost } from '../actions/posts';
+import { generateID } from '../utils/helpers';
+import { Form, Input, Button, Select, message, Col, Row } from 'antd';
 
+const FormItem = Form.Item;
 
-class Post extends Component {
-  handleVote = (e) => {
+function hasErrors(fieldsError) {
+  return Object.keys(fieldsError).some(field => fieldsError[field]);
+}
+
+class NewPost extends Component {
+  state = {
+    toHome: false
+  }
+
+  componentDidMount() {
+    // Desabilita o botão de submit no começo
+    this.props.form.validateFields();
+  }
+
+  handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e)
-    const vote = e.target.value;
-    const { dispatch, post } = this.props;
+    e.submitValue = e.value;
+    console.log(e.target)
 
-    dispatch(handleVotePost({
-      id: post.id,
-      vote: { option: vote }
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        this.addPost(values);
+      }
+    });
+  }
+
+  addPost = (values) => {
+    const { dispatch } = this.props;
+
+    dispatch(handleAddPost({
+      id: generateID(),
+      timestamp: new Date().getTime(),
+      title: values.title,
+      body: values.text,
+      author: values.author,
+      category: values.category,
     }))
+      .then(this.success())
   }
 
-  toCategory = (e, category) => {
-    e.preventDefault();
-    this.props.history.push(`/${category}`);
-  }
+  success = () => {
+    message.success('Your post was successfully created!');
+
+    setTimeout(() => {
+      this.setState({
+          toHome: true,
+        })
+      }, 500
+    )
+  };
 
   render() {
-    const { Meta } = Card;
-    const { post } = this.props;
+    const { toHome } = this.state;
+
+    if (toHome === true) {
+      return <Redirect to='/' />
+    }
+
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+    const { TextArea } = Input;
+    const Option = Select.Option;
+
+    // Mostra error nos campos somente após ter foco
+    const titleError = isFieldTouched('title') && getFieldError('title');
+    const textError = isFieldTouched('text') && getFieldError('text');
+    const authorError = isFieldTouched('author') && getFieldError('author');
+    const categoryError = isFieldTouched('category') && getFieldError('category');
 
     return (
-      <Link to={`/${post.category}/${post.id}`}>
-        <Card
-          className="post"
-          hoverable
-          actions={[
-            <div><HeartIcon style={{ width: '12px', height: '12px', marginRight: '8px' }}/><span>{`${post.commentCount} Comments`}</span></div>]}>
-            <header className="post__header">
-              <div className="post__category">
-                <Icon type="rocket" theme="outlined"/>
-                <button onClick={(e) => this.toCategory(e, post.category)}>{post.category}</button>
-              </div>
-              <div className="post__info">
-                / Posted by 
-                <span className="post__author">{post.author}</span>
-                <span className="post__date">{convertDate(post.timestamp)}</span>
-                </div>
-            </header>
-            <Meta
-              title={ post.title }
-              description={ post.body }
-            />
-            <div className="vote">
-              <button
-                className={`vote__button ${post.vote === 'upVote' ? 'vote__button--active' : '' }`}
-                onClick={(e) => this.handleVote(e)}
-                type="button"
-                value="upVote"
-                >
-                <Icon type="caret-up" theme="outlined"/>
-              </button>
-              <p>{ post.voteScore }</p>
-              <button
-                className={`vote__button ${post.vote === 'downVote' ? 'vote__button--active' : '' }`}
-                onClick={this.handleVote}
-                type="button"
-                value="downVote">
-                <Icon type="caret-down" theme="outlined"/>
-              </button>
-            </div>
-        </Card>
-      </Link>
+      <div>
+        <h2>Create a post</h2>
+        <Form layout="vertical" onSubmit={this.handleSubmit}>
+          <FormItem label="Title"
+            validateStatus={titleError ? 'error' : ''}
+            help={titleError || ''}
+          >
+            {getFieldDecorator('title', { rules: [{ required: true }] })(
+              <Input />
+            )}
+          </FormItem>
+          <FormItem label="Text"
+            validateStatus={textError ? 'error' : ''}
+            help={textError || ''}
+          >
+            {getFieldDecorator('text', { rules: [{ required: true }] })(
+              <TextArea autosize={{ minRows: 6 }} />
+            )}
+          </FormItem>
+          <Row gutter={24}>
+            <Col className="gutter-row" span={12}>
+            <FormItem label="Author"
+              validateStatus={authorError ? 'error' : ''}
+              help={authorError || ''}
+            >
+              {getFieldDecorator('author', { rules: [{ required: true }] })(
+                <Input />
+              )}
+            </FormItem>
+            </Col>
+            <Col className="gutter-row" span={12}>
+              <FormItem label="Category"
+                validateStatus={categoryError ? 'error' : ''}
+                help={categoryError || ''}
+              >
+                {getFieldDecorator('category', { rules: [{ required: true }] })(
+                  <Select onChange={this.onCategoryChange}>
+                    {this.props.categories.map(category => <Option key={category.name}>{category.name}</Option>)}
+                  </Select>
+                  )}
+              </FormItem>
+            </Col>
+          </Row>
+          <FormItem>
+            <Link to="/">
+              <Button
+                type="default"
+                style={{ marginRight: '16px' }}
+              >
+                Cancel
+              </Button>
+            </Link>
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={hasErrors(getFieldsError())}
+            >
+              Post
+            </Button>
+          </FormItem>
+        </Form>
+      </div>
     );
   }
 }
 
-function mapStateToProps({ posts }, { post }) {
+const NewPostForm = Form.create()(NewPost);
+
+const mapStateToProps = ({ categories }) => {
   return {
-    post: post,
+    categories: Object.values(categories),
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Post));
+export default connect(mapStateToProps)(NewPostForm);

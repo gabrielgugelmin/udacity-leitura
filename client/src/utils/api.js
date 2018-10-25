@@ -20,6 +20,14 @@ export function getInitialData () {
   }))
 }
 
+export const getPost = (id) =>
+  fetch(`${api}/posts/${id}`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    }
+  }).then(res => res.json())
 
 export const getPosts = () =>
   fetch(`${api}/posts`, { headers })
@@ -51,4 +59,4 @@ export const savePost = (post) =>
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(post)
-  }).then(res => { let x = res.json(); console.log('NOVO POST: ', res); return x;})
+  }).then(res => res.json())

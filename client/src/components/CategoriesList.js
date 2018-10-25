@@ -4,12 +4,6 @@ import { Link } from 'react-router-dom';
 import { List } from 'antd';
 
 class CategoriesList extends Component {
-
-  // componentDidMount() {
-  //   const { dispatch } = this.props;
-  //   dispatch(handleGetCategories());
-  // }
-
   handleCategoryPosts = () => {
     console.log(this.props.match.params.category)
   }
@@ -18,6 +12,7 @@ class CategoriesList extends Component {
     const { categories } = this.props;
     return (
       <List
+        className="category__list"
         header={<h3>Categories</h3>}
         bordered
         dataSource={categories}

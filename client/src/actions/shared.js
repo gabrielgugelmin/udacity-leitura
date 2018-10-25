@@ -1,5 +1,5 @@
 import { getInitialData } from '../utils/api';
-import { receivePosts } from './posts';
+// import { receivePosts } from './posts';
 import { receiveCategories } from './categories';
 
 
