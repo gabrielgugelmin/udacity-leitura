@@ -60,3 +60,16 @@ export const savePost = (post) =>
     },
     body: JSON.stringify(post)
   }).then(res => res.json())
+
+export const disablePost = (id) =>
+  fetch(`${api}/posts/${id}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    }
+}).then(res => res.json())
+
+export const getCommentsByPostId = (id) =>
+  fetch(`${api}/posts/${id}/comments`, { headers })
+    .then(res => { let x = res.json(); console.log(id); return x; })

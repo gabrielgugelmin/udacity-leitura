@@ -38,9 +38,22 @@
 
   .vote {
     margin-left: 8px;
+    position: absolute;
   }
 
   .ant-card-body {
     padding: 0 0 8px 40px;
+  }
+
+  .ant-card-actions {
+    span,
+    i {
+      font-size: 12.9px;
+      font-weight: bold;
+    }
+
+    > li:last-child > span:hover {
+      color: $red-6;
+    }
   }
 }

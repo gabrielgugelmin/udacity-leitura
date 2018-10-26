@@ -23,3 +23,14 @@ export function arrayToObject (array, keyField) {
     return obj
   }, {})
 }
+
+
+export function copyToClipboard (text) {
+  var body = document.querySelector('body');
+  var tempInput = document.createElement('input');
+  body.appendChild(tempInput);
+  tempInput.setAttribute('value', text)
+  tempInput.select();
+  document.execCommand('copy');
+  body.removeChild(tempInput);
+};

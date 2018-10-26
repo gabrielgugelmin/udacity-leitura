@@ -11,4 +11,19 @@
       }
     }
   }
+
+  &__empty-state {
+    text-align: center;
+
+    p {
+      font-size: 24px;
+    }
+    .anticon {
+      color: $gray-5;
+      display: block;
+      margin: 0 auto;
+      max-width: 90%;
+      width: 160px;
+    }
+  }
 }

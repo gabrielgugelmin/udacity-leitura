@@ -1,8 +1,17 @@
-export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
+import { getCommentsByPostId } from "../utils/api";
 
-export function receiveComments(comments) {
+export const GET_COMMENTS = 'GET_COMMENTS';
+
+function getComments(comments) {
   return {
-    type: RECEIVE_COMMENTS,
+    type: GET_COMMENTS,
     comments,
+  }
+}
+
+export function handleGetComments(postId) {
+  return (dispatch) => {
+    return getCommentsByPostId(postId)
+      .then(comments => dispatch(getComments(comments)))
   }
 }

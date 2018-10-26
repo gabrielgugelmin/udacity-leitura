@@ -2,23 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Card, Icon } from 'antd';
-import { HeartIcon } from './Icons'
 import { convertDate } from '../utils/helpers';
-import { handleVotePost } from '../actions/posts';
+import Vote from './Vote';
+import PostActions from './PostActions';
 
 
 class Post extends Component {
-  handleVote = (e) => {
-    e.preventDefault();
-    console.log(e)
-    const vote = e.target.value;
-    const { dispatch, post } = this.props;
-
-    dispatch(handleVotePost({
-      id: post.id,
-      vote: { option: vote }
-    }))
-  }
 
   redirectToPostDetail = (e, id, category) => {
     e.preventDefault();
@@ -32,49 +21,30 @@ class Post extends Component {
 
   render() {
     const { Meta } = Card;
-    const { post } = this.props;
+    const { id, category, author, timestamp, title, body, commentCount } = this.props.post;
 
     return (
-      <Link to={`/${post.category}/${post.id}`}>
+      <Link to={`/${category}/${id}`}>
         <Card
           className="post-card"
-          hoverable
-          actions={[
-            <div><HeartIcon style={{ width: '12px', height: '12px', marginRight: '8px' }}/><span>{`${post.commentCount} Comments`}</span></div>,
-            <button onClick={(e) => this.redirectToPostDetail(e, post.id, post.category)}>Edit</button>]}>
+          hoverable>
             <header className="post-card__header">
               <div className="post-card__category">
                 <Icon type="rocket" theme="outlined"/>
-                <button onClick={(e) => this.redirectToCategory(e, post.category)}>{post.category}</button>
+                <button onClick={(e) => this.redirectToCategory(e, category)}>{category}</button>
               </div>
               <div className="post-card__info">
                 / Posted by 
-                <span className="post-card__author">{post.author}</span>
-                <span className="post-card__date">{convertDate(post.timestamp)}</span>
+                <span className="post-card__author">{author}</span>
+                <span className="post-card__date">· {convertDate(timestamp)}</span>
                 </div>
             </header>
             <Meta
-              title={ post.title }
-              description={ post.body }
+              title={ title }
+              description={ body }
             />
-            <div className="vote">
-              <button
-                className={`vote__button ${post.vote === 'upVote' ? 'vote__button--active' : '' }`}
-                onClick={(e) => this.handleVote(e)}
-                type="button"
-                value="upVote"
-                >
-                <Icon type="caret-up" theme="outlined"/>
-              </button>
-              <p>{ post.voteScore }</p>
-              <button
-                className={`vote__button ${post.vote === 'downVote' ? 'vote__button--active' : '' }`}
-                onClick={this.handleVote}
-                type="button"
-                value="downVote">
-                <Icon type="caret-down" theme="outlined"/>
-              </button>
-            </div>
+            <Vote post={this.props.post} />
+            <PostActions info={{ id, category, commentCount }} />
         </Card>
       </Link>
     );

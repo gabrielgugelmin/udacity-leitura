@@ -12,10 +12,15 @@
   }
 }
 
+.ant-card-meta {
+  margin-bottom: 8px;
+}
+
 .ant-card-actions {
-  margin-left: 40px;
   background: transparent;
   border: 0;
+  margin-left: 40px;
+  margin-top: 8px;
 
   a {
     font-size: 12.9px;
@@ -23,7 +28,6 @@
   }
 
   > li {
-    text-align: left;
     margin: 0;
 
     &:not(:last-child) {

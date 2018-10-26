@@ -1,0 +1,22 @@
+.comment {
+  margin-bottom: 32px;
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    font-size: 12.9px;
+    margin-bottom: 8px;
+
+    span {
+      padding: 0 4px;
+
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+  }
+
+  &__body {
+    color: $gray-9;
+  }
+}
