@@ -21,7 +21,6 @@ class PostList extends Component {
 
   handleOrder = (e) => {
     e.preventDefault();
-    console.log(e.target.value)
     const value = e.target.value;
     const { dispatch, sort } = this.props;
 

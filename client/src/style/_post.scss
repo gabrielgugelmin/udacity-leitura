@@ -7,12 +7,12 @@
   }
 
   &__action {
-    display: flex;
     align-items: center;
+    display: flex;
     font-size: 12.9px;
     font-weight: bold;
-    padding: 0;
     margin-right: 16px;
+    padding: 0;
 
     &:last-child {
       margin-right: 0;

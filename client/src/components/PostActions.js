@@ -42,7 +42,6 @@ class PostActions extends Component {
   cancelDeletePost = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log(this.props)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,6 +50,11 @@ class PostActions extends Component {
         commentCount: nextProps.commentCount,
       })
     }
+  }
+
+  editPost = (e, id) => {
+    e.preventDefault();
+    this.props.history.push(`/${id}/edit`);
   }
 
   render() {
@@ -68,7 +72,7 @@ class PostActions extends Component {
           <CommentIcon />
           <span>{`${this.state.commentCount} Comments`}</span>
         </div>
-        <button className="post__action" onClick={(e) => this.redirectToPostDetail(e, id, category)}>
+        <button className="post__action" onClick={(e) => this.editPost(e, id)}>
           <EditIcon />
           <span>Edit</span>
         </button>
@@ -88,9 +92,8 @@ class PostActions extends Component {
 }
 
 function mapStateToProps({ comments }) {
-  console.log('mapStateToProps', comments);
   return {
-    commentCount: Object.keys(comments).length,
+    commentCount: Object.values(comments).filter(c => c.deleted === false).length,
   }
 }
 

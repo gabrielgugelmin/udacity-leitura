@@ -1,4 +1,4 @@
-import { GET_COMMENTS, ADD_COMMENT, VOTE_COMMENT } from "../actions/comments";
+import { GET_COMMENTS, ADD_COMMENT, VOTE_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from "../actions/comments";
 import { arrayToObject } from "../utils/helpers";
 
 export default function comments(state = {}, action) {
@@ -11,6 +11,23 @@ export default function comments(state = {}, action) {
       return {
         ...state,
         [action.comment.id]: action.comment,
+      }
+    case EDIT_COMMENT:
+      return {
+        ...state,
+        [action.comment.id]: {
+          ...state[action.comment.id],
+          body: action.comment.body,
+          timestamp: action.comment.timestamp,
+        }
+      }
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        [action.comment.id]: {
+          ...state[action.comment.id],
+          deleted: true,
+        }
       }
     case VOTE_COMMENT:
       let updatedScore = state[action.id].voteScore;

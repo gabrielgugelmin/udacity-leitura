@@ -18,7 +18,6 @@ class PostForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     e.submitValue = e.value;
-    console.log(e.target)
 
     this.props.form.validateFields((err, values) => {
       if (!err) {

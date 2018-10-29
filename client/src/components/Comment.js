@@ -87,7 +87,7 @@ class CommentForm extends Component {
               <TextArea autosize={{ minRows: 6 }} placeholder="Leave a great comment here" />
             )}
           </FormItem>
-          <FormItem>
+          <FormItem className="form--right">
             <Button
               type="primary"
               htmlType="submit"

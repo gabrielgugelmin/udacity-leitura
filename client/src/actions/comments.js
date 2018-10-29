@@ -1,8 +1,10 @@
-import { getCommentsByPostId, saveComment, saveCommentVote } from "../utils/api";
+import { getCommentsByPostId, saveComment, saveCommentVote, editComment, disableComment } from "../utils/api";
 
-export const GET_COMMENTS = 'GET_COMMENTS';
-export const ADD_COMMENT  = 'ADD_COMMENT';
-export const VOTE_COMMENT    = 'VOTE_COMMENT';
+export const GET_COMMENTS   = 'GET_COMMENTS';
+export const ADD_COMMENT    = 'ADD_COMMENT';
+export const EDIT_COMMENT   = 'EDIT_COMMENT';
+export const VOTE_COMMENT   = 'VOTE_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 function getComments(comments) {
   return {
@@ -26,7 +28,6 @@ function addComment(comment) {
 }
 
 export function handleAddComment(commentInfo) {
-  console.log('handleAddComment', commentInfo);
   return (dispatch) => {
     return saveComment({
       id: commentInfo.id,
@@ -35,6 +36,36 @@ export function handleAddComment(commentInfo) {
       author: commentInfo.author,
       parentId: commentInfo.parentId,
     }).then((comment) => dispatch(addComment(comment)))
+  }
+}
+
+function edit(comment) {
+  return {
+    type: EDIT_COMMENT,
+    comment,
+  }
+}
+
+export function handleEditComment(comment) {
+  return (dispatch) => {
+    return editComment(comment.id, {
+      timestamp: comment.timestamp,
+      body: comment.body,
+    }).then((comment) => dispatch(edit(comment)))
+  }
+}
+
+function deleteComment (comment) {
+  return {
+    type: DELETE_COMMENT,
+    comment,
+  }
+}
+
+export function handleDeleteComment(comment) {
+  return (dispatch) => {
+    return disableComment(comment)
+      .then(comment => dispatch(deleteComment(comment)))
   }
 }
 

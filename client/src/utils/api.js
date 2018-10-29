@@ -61,6 +61,16 @@ export const savePost = (post) =>
     body: JSON.stringify(post)
   }).then(res => res.json())
 
+export const editPost = (postId, postInfo) =>
+  fetch(`${api}/posts/${postId}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(postInfo)
+  }).then(res => res.json())
+
 export const disablePost = (id) =>
   fetch(`${api}/posts/${id}`, {
     method: 'DELETE',
@@ -84,12 +94,31 @@ export const saveComment = (comment) =>
     body: JSON.stringify(comment)
   }).then(res => res.json())
 
-  export const saveCommentVote = ({id, vote}) =>
-    fetch(`${api}/comments/${id}`, {
-      method: 'POST',
-      headers: {
-        ...headers,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(vote)
-    }).then(res => res.json())
+export const editComment = (commentId, commentInfo) =>
+  fetch(`${api}/comments/${commentId}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(commentInfo)
+  }).then(res => res.json())
+
+export const disableComment = (id) =>
+  fetch(`${api}/comments/${id}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    }
+}).then(res => res.json())
+
+export const saveCommentVote = ({id, vote}) =>
+  fetch(`${api}/comments/${id}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(vote)
+  }).then(res => res.json())

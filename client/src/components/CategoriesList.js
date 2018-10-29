@@ -4,10 +4,6 @@ import { Link } from 'react-router-dom';
 import { List } from 'antd';
 
 class CategoriesList extends Component {
-  handleCategoryPosts = () => {
-    console.log(this.props.match.params.category)
-  }
-
   render() {
     const { categories } = this.props;
     return (

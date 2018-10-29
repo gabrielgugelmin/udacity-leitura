@@ -8,7 +8,6 @@ import { CommentsIcon } from './Icons';
 class CommentList extends Component {
   componentDidMount() {
     const postId = this.props.match.params.id;
-    console.log('did mount', postId);
     const { dispatch } = this.props;
     dispatch(handleGetComments(postId));
   }
@@ -20,11 +19,11 @@ class CommentList extends Component {
         {
           (comments.length > 0) ? (
             this.props.comments.map(comment => (
-              <CommentDetail key={comment.id} comment={comment} />
+              (comment.deleted === false) && (<CommentDetail key={comment.id} comment={comment} />)
             ))
           ) : (
           <div className="comment__empty-state">
-            <p>No Comments Yet</p>
+            <p>No comments yet</p>
             <CommentsIcon />
           </div>
           )

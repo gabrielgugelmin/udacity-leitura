@@ -59,6 +59,15 @@ class App extends Component {
                   </Row>
                 )} />
 
+                {/* EDIT POST */}
+                <Route path="/:id/edit" render={(props) => (
+                  <Row gutter={24}>
+                    <Col className="gutter-row" span={20} offset={2}>
+                      <Post {...props} editing={true} />
+                    </Col>
+                  </Row>
+                )} />
+
                 {/* CATEGORIES */}
                 <Route exact path="/:category" render={(props) => (
                   <Row gutter={24}>

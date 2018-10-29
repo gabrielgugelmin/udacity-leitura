@@ -1,6 +1,7 @@
-import { saveVote, getByCategory, getPost, getPosts, savePost, disablePost } from '../utils/api';
+import { saveVote, getByCategory, getPost, getPosts, savePost, disablePost, editPost } from '../utils/api';
 
 export const ADD_POST      = 'ADD_POST';
+export const EDIT_POST     = 'EDIT_POST';
 export const DELETE_POST   = 'DELETE_POST';
 export const GET_POST      = 'GET_POST';
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
@@ -10,6 +11,7 @@ function receivePost(post) {
   return {
     type: GET_POST,
     post,
+    loading: false,
   }
 }
 
@@ -37,6 +39,22 @@ export function handleAddPost(postInfo) {
       author: postInfo.author,
       category: postInfo.category,
     }).then((post) => dispatch(addPost(post)))
+  }
+}
+
+function edit(post) {
+  return {
+    type: EDIT_POST,
+    post,
+  }
+}
+
+export function handleEditPost(post) {
+  return (dispatch) => {
+    return editPost(post.id, {
+      title: post.title,
+      body: post.body,
+    }).then((post) => dispatch(edit(post)))
   }
 }
 

@@ -94,5 +94,5 @@ export const SadIcon = props => (
 );
 
 export const CommentsIcon = props => (
-  <Icon component={CommentsIcon} {...props} />
+  <Icon component={CommentsSvg} {...props} />
 );

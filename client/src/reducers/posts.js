@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS, VOTE_POST, ADD_POST, GET_POST, DELETE_POST } from "../actions/posts";
+import { RECEIVE_POSTS, VOTE_POST, ADD_POST, GET_POST, DELETE_POST, EDIT_POST } from "../actions/posts";
 import { arrayToObject } from '../utils/helpers'
 
 export default function posts(state = {}, action) {
@@ -30,6 +30,15 @@ export default function posts(state = {}, action) {
     case GET_POST:
       return {
         [action.post.id]: action.post,
+      }
+    case EDIT_POST:
+      return {
+        ...state,
+        [action.post.id]: {
+          ...state[action.post.id],
+          body: action.post.body,
+          title: action.post.title,
+        }
       }
     case DELETE_POST:
       return {
