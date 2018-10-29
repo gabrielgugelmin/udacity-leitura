@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleGetPost } from '../actions/posts';
-import { Card, Icon } from 'antd';
+import { Icon } from 'antd';
 import { convertDate } from '../utils/helpers';
 import Vote from './Vote';
 import PostActions from './PostActions';
 import CommentList from './CommentList';
+import Comment from './Comment';
 
 class PostDetail extends Component {
   state = {
@@ -20,14 +21,13 @@ class PostDetail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { id, author, body, category, commentCount, timestamp, title, voteScore, vote } = nextProps.post;
+    const { id, author, body, category, timestamp, title, voteScore, vote } = nextProps.post;
     this.setState({
       post: {
         id,
         author,
         body,
         category,
-        commentCount,
         timestamp,
         title,
         voteScore,
@@ -38,7 +38,7 @@ class PostDetail extends Component {
   }
 
   render() {
-    const { id, author, body, category, commentCount, timestamp, title, voteScore, vote } = this.state.post;
+    const { id, author, body, category, timestamp, title } = this.state.post;
 
     return (
       <div className="post" style={{ backgroundColor: 'white'}}>
@@ -58,9 +58,10 @@ class PostDetail extends Component {
           <h2>{title}</h2>
           <p>{body}</p>
 
-          <PostActions info={{ id, category, commentCount }} />
+          <PostActions info={{ id, category }} />
 
-          <div className="comments">
+          <div className="comment">
+            <Comment postId={id} />
             <CommentList />
           </div>
         </div>

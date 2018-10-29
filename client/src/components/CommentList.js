@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { handleGetComments } from '../actions/comments';
-import Comment from './Comment';
+import CommentDetail from './CommentDetail';
+import { CommentsIcon } from './Icons';
 
 class CommentList extends Component {
   componentDidMount() {
@@ -19,10 +20,13 @@ class CommentList extends Component {
         {
           (comments.length > 0) ? (
             this.props.comments.map(comment => (
-              <Comment key={comment.id} comment={comment} />
+              <CommentDetail key={comment.id} comment={comment} />
             ))
           ) : (
-            <p>Sem comentários</p>
+          <div className="comment__empty-state">
+            <p>No Comments Yet</p>
+            <CommentsIcon />
+          </div>
           )
         }
       </div>

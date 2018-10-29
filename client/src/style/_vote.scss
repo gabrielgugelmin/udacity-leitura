@@ -48,4 +48,27 @@
   p {
     margin: 8px 0;
   }
+
+  &--small {
+    .vote__button {
+      background-color: transparent;
+      padding: 1px 3px;
+
+      &--active {
+        &:first-child {
+          border-color: transparent;
+          color: $blue-6;
+        }
+
+        &:last-child {
+          border-color: transparent;
+          color: $red-6;
+        }
+      }
+    }
+
+    p {
+      display: none;
+    }
+  }
 }

@@ -9,6 +9,7 @@ import { handleDeletePost } from '../actions/posts';
 class PostActions extends Component {
   state = {
     toHome: false,
+    commentCount: 0,
   }
 
   handleCopyURL = (e, url) => {
@@ -44,8 +45,16 @@ class PostActions extends Component {
     console.log(this.props)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.commentCount !== this.state.commentCount) {
+      this.setState({
+        commentCount: nextProps.commentCount,
+      })
+    }
+  }
+
   render() {
-    const { id, category, commentCount } = this.props.info;
+    const { id, category } = this.props.info;
     const url = `${window.location.origin}/${category}/${id}`;
     const { toHome } = this.state;
 
@@ -57,7 +66,7 @@ class PostActions extends Component {
       <div className="post__actions">
         <div className="post__action">
           <CommentIcon />
-          <span>{`${commentCount} Comments`}</span>
+          <span>{`${this.state.commentCount} Comments`}</span>
         </div>
         <button className="post__action" onClick={(e) => this.redirectToPostDetail(e, id, category)}>
           <EditIcon />
@@ -78,4 +87,11 @@ class PostActions extends Component {
   }
 }
 
-export default withRouter(connect()(PostActions));
+function mapStateToProps({ comments }) {
+  console.log('mapStateToProps', comments);
+  return {
+    commentCount: Object.keys(comments).length,
+  }
+}
+
+export default withRouter(connect(mapStateToProps)(PostActions));

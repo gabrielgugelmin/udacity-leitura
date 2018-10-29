@@ -5,13 +5,7 @@ import { handleAddPost } from '../actions/posts';
 import { generateID } from '../utils/helpers';
 import { Form, Input, Button, Select, message, Col, Row } from 'antd';
 
-const FormItem = Form.Item;
-
-function hasErrors(fieldsError) {
-  return Object.keys(fieldsError).some(field => fieldsError[field]);
-}
-
-class NewPost extends Component {
+class PostForm extends Component {
   state = {
     toHome: false
   }
@@ -58,6 +52,10 @@ class NewPost extends Component {
     )
   };
 
+  hasErrors = (fieldsError) => {
+    return Object.keys(fieldsError).some(field => fieldsError[field]);
+  }
+
   render() {
     const { toHome } = this.state;
 
@@ -68,6 +66,7 @@ class NewPost extends Component {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
     const { TextArea } = Input;
     const Option = Select.Option;
+    const FormItem = Form.Item;
 
     // Mostra error nos campos somente após ter foco
     const titleError = isFieldTouched('title') && getFieldError('title');
@@ -131,7 +130,7 @@ class NewPost extends Component {
             <Button
               type="primary"
               htmlType="submit"
-              disabled={hasErrors(getFieldsError())}
+              disabled={this.hasErrors(getFieldsError())}
             >
               Post
             </Button>
@@ -142,7 +141,7 @@ class NewPost extends Component {
   }
 }
 
-const NewPostForm = Form.create()(NewPost);
+const Post = Form.create()(PostForm);
 
 const mapStateToProps = ({ categories }) => {
   return {
@@ -150,4 +149,4 @@ const mapStateToProps = ({ categories }) => {
   }
 }
 
-export default connect(mapStateToProps)(NewPostForm);
+export default connect(mapStateToProps)(Post);

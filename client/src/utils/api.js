@@ -72,4 +72,24 @@ export const disablePost = (id) =>
 
 export const getCommentsByPostId = (id) =>
   fetch(`${api}/posts/${id}/comments`, { headers })
-    .then(res => { let x = res.json(); console.log(id); return x; })
+    .then(res => res.json())
+
+export const saveComment = (comment) =>
+  fetch(`${api}/comments`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(comment)
+  }).then(res => res.json())
+
+  export const saveCommentVote = ({id, vote}) =>
+    fetch(`${api}/comments/${id}`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(vote)
+    }).then(res => res.json())
