@@ -3,17 +3,20 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Layout, Col, Row } from 'antd';
 
+// Obtém os dados iniciais necessários para a aplicação
 import { handleInitialData } from '../actions/shared';
 
-import 'antd/dist/antd.css';
-import '../style/style.scss';
-
+// Componentes
 import Logo from './Logo';
 import CategoriesList from './CategoriesList';
 import PostDetail from './PostDetail';
 import NewPostButton from './NewPostButton';
 import Post from './Post';
 import PostList from './PostList';
+
+// Estilos
+import 'antd/dist/antd.css';
+import '../style/style.scss';
 
 class App extends Component {
 
@@ -63,7 +66,7 @@ class App extends Component {
                 <Route path="/:id/edit" render={(props) => (
                   <Row gutter={24}>
                     <Col className="gutter-row" span={20} offset={2}>
-                      <Post {...props} editing={true} />
+                      <Post {...props} />
                     </Col>
                   </Row>
                 )} />
@@ -102,11 +105,5 @@ class App extends Component {
     );
   }
 }
-
-// function mapStateToProps({ posts }) {
-//   return {
-//     loading: !posts
-//   }
-// }
 
 export default connect()(App);

@@ -11,7 +11,6 @@ import Comment from './Comment';
 class PostDetail extends Component {
   state = {
     post: {},
-    loading: true,
   }
 
   componentDidMount() {
@@ -22,6 +21,7 @@ class PostDetail extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { id, author, body, category, timestamp, title, voteScore, vote } = nextProps.post;
+
     this.setState({
       post: {
         id,
@@ -32,8 +32,7 @@ class PostDetail extends Component {
         title,
         voteScore,
         vote,
-      },
-      loading: false,
+      }
     });
   }
 
@@ -41,7 +40,7 @@ class PostDetail extends Component {
     const { id, author, body, category, timestamp, title } = this.state.post;
 
     return (
-      <div className="post" style={{ backgroundColor: 'white'}}>
+      <div className="post" >
         <div className="post__body">
           <header className="post__header">
             <div className="post__category">

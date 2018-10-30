@@ -44,7 +44,7 @@ class Post extends Component {
               description={ body }
             />
             <Vote post={this.props.post} />
-            <PostActions info={{ id, category, commentCount }} />
+            <PostActions info={{ id, category, commentCount, post: this.props.post }} />
         </Card>
       </Link>
     );

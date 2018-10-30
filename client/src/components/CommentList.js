@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { handleGetComments } from '../actions/comments';
-import CommentDetail from './CommentDetail';
 import { CommentsIcon } from './Icons';
+import CommentDetail from './CommentDetail';
 
 class CommentList extends Component {
   componentDidMount() {

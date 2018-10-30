@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { convertDate } from '../utils/helpers';
+import { Popconfirm, message, Input, Button } from 'antd';
 import { EditIcon, DeleteIcon } from './Icons';
 import Vote from './Vote';
-import { Popconfirm, message, Input, Button } from 'antd';
 import { handleEditComment, handleDeleteComment } from '../actions/comments';
+import { convertDate } from '../utils/helpers';
 
 class CommentDetail extends Component {
   state = {
@@ -13,23 +13,17 @@ class CommentDetail extends Component {
     text: this.props.comment.body,
   }
 
-  handleChangeAuthor = (e) => {
-    const author = e.target.value;
+  handleInputChange = (e) => {
+    const target = e.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
 
-    this.setState(() => ({
-      author
-    }))
+    this.setState({
+        [name]: value
+    });
   }
 
-  handleChangeText = (e) => {
-    const text = e.target.value;
-
-    this.setState(() => ({
-      text
-    }))
-  }
-
-  handleEditComment = (e) => {
+  editComment = (e) => {
     e.preventDefault();
     this.setState({
       editing: true,
@@ -42,7 +36,7 @@ class CommentDetail extends Component {
 
     this.setState({
       editing: false,
-    })
+    });
 
     if(isSaving) {
       const { dispatch, comment } = this.props;
@@ -50,7 +44,7 @@ class CommentDetail extends Component {
         id: comment.id,
         timestamp: new Date().getTime(),
         body: this.state.text,
-      }))
+      }));
     }
   }
 
@@ -84,8 +78,13 @@ class CommentDetail extends Component {
         </div>
         <div className="comment__body">
           {
-            (this.state.editing === true) ? (
-              <TextArea value={this.state.text} onChange={this.handleChangeText} autosize={{ minRows: 6 }} />
+            (this.state.editing) ? (
+              <TextArea
+                autosize={{ minRows: 6 }}
+                name="text"
+                onChange={this.handleInputChange}
+                value={this.state.text}
+              />
             ) :
             (
               <p>{body}</p>
@@ -93,7 +92,7 @@ class CommentDetail extends Component {
           }
         </div>
         <footer className="comment__footer">
-          <button className="comment__action" onClick={(e) => this.handleEditComment(e)}>
+          <button className="comment__action" onClick={(e) => this.editComment(e)}>
             <EditIcon />
             <span>Edit</span>
           </button>
@@ -106,10 +105,10 @@ class CommentDetail extends Component {
           {
             (this.state.editing) && (
               <div className="comment__action--right">
-                <Button onClick={(e) => this.handleSaveEditComment(e)} size="small" style={{ marginRight: '8px' }} value="nd">
+                <Button onClick={this.handleSaveEditComment} size="small" style={{ marginRight: '8px' }} value="nd">
                   Cancel
                 </Button>
-                <Button type="primary" onClick={(e) => this.handleSaveEditComment(e)} size="small" value="save">
+                <Button type="primary" onClick={this.handleSaveEditComment} size="small" value="save">
                   Save
                 </Button>
               </div>

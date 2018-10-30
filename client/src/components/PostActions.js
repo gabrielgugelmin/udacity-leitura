@@ -44,6 +44,12 @@ class PostActions extends Component {
     e.preventDefault();
   }
 
+  componentDidMount() {
+    this.setState({
+      commentCount: this.props.info.commentCount,
+    })
+  }
+
   componentWillReceiveProps(nextProps) {
     if(nextProps.commentCount !== this.state.commentCount) {
       this.setState({
@@ -54,7 +60,7 @@ class PostActions extends Component {
 
   editPost = (e, id) => {
     e.preventDefault();
-    this.props.history.push(`/${id}/edit`);
+    this.props.history.push(`/${id}/edit`)
   }
 
   render() {
@@ -72,7 +78,7 @@ class PostActions extends Component {
           <CommentIcon />
           <span>{`${this.state.commentCount} Comments`}</span>
         </div>
-        <button className="post__action" onClick={(e) => this.editPost(e, id)}>
+        <button className="post__action" onClick={(e) => this.editPost(e, id)} >
           <EditIcon />
           <span>Edit</span>
         </button>

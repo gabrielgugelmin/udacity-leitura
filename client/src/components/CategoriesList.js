@@ -6,6 +6,7 @@ import { List } from 'antd';
 class CategoriesList extends Component {
   render() {
     const { categories } = this.props;
+
     return (
       <List
         className="category__list"

@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PostCard from './PostCard';
 import { sortPosts } from '../actions/sort';
-import { Button, Icon } from 'antd';
+import { Button, Icon, Skeleton } from 'antd';
 import { handleGetPosts } from '../actions/posts';
 import { SadIcon } from './Icons';
 
 class PostList extends Component {
+  state = {
+    loading: true,
+  }
+
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(handleGetPosts(this.props.match.params.category));
@@ -31,47 +35,49 @@ class PostList extends Component {
     const { posts, sort } = this.props;
     return (
       <div className="timeline">
-        {
-          (posts.length > 0) ? (
-            <div className="timeline__list">
-              <div className="timeline__actions">
-                <Button onClick={this.handleOrder} value="date" className={(sort.sortBy === 'date') ? 'ant-btn-primary' : ''}>
-                  Order by date
-                  {
-                    (sort.sortBy === 'date' && sort.isAscending) && (
-                      <Icon type="caret-down" theme="outlined"/>
-                    )
-                  }
-                  {
-                    (sort.sortBy === 'date' && !sort.isAscending) && (
-                      <Icon type="caret-up" theme="outlined"/>
-                    )
-                  }
-                </Button>
-                <Button onClick={this.handleOrder} value="score" className={(sort.sortBy === 'score') ? 'ant-btn-primary' : ''}>
-                  Order by score
-                  {
-                    (sort.sortBy === 'score' && sort.isAscending) && (
-                      <Icon type="caret-down" theme="outlined"/>
-                    )
-                  }
-                  {
-                    (sort.sortBy === 'score' && !sort.isAscending) && (
-                      <Icon type="caret-up" theme="outlined"/>
-                    )
-                  }
-                </Button>
+        <Skeleton loading={this.state.loading} active>
+          {
+            (posts.length > 0) ? (
+              <div className="timeline__list">
+                <div className="timeline__actions">
+                  <Button onClick={this.handleOrder} value="date" className={(sort.sortBy === 'date') ? 'ant-btn-primary' : ''}>
+                    Order by date
+                    {
+                      (sort.sortBy === 'date' && sort.isAscending) && (
+                        <Icon type="caret-down" theme="outlined"/>
+                      )
+                    }
+                    {
+                      (sort.sortBy === 'date' && !sort.isAscending) && (
+                        <Icon type="caret-up" theme="outlined"/>
+                      )
+                    }
+                  </Button>
+                  <Button onClick={this.handleOrder} value="score" className={(sort.sortBy === 'score') ? 'ant-btn-primary' : ''}>
+                    Order by score
+                    {
+                      (sort.sortBy === 'score' && sort.isAscending) && (
+                        <Icon type="caret-down" theme="outlined"/>
+                      )
+                    }
+                    {
+                      (sort.sortBy === 'score' && !sort.isAscending) && (
+                        <Icon type="caret-up" theme="outlined"/>
+                      )
+                    }
+                  </Button>
+                </div>
+                { posts.map((post) => (post.deleted === false) && (<PostCard key={post.id} post={post} />)) }
               </div>
-              { posts.map((post) => (post.deleted === false) && (<PostCard key={post.id} post={post} />)) }
-            </div>
-          ) :
-          (
-            <div className="timeline__empty-state">
-              <p>Oops! There's nothing here!</p>
-              <SadIcon />
-            </div>
-          )
-        }
+            ) :
+            (
+              <div className="timeline__empty-state">
+                <p>Oops! There's nothing here!</p>
+                <SadIcon />
+              </div>
+            )
+          }
+        </Skeleton>
       </div>
     );
   }

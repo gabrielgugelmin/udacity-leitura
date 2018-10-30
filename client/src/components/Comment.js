@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Input, Button, message } from 'antd';
-import { generateID } from '../utils/helpers';
 import { handleAddComment } from '../actions/comments';
+import { generateID } from '../utils/helpers';
 
 class CommentForm extends Component {
   state = {
     author: '',
-    text: '',
+    body: '',
   }
+
   componentDidMount() {
     // Desabilita o botão de submit no começo
     this.props.form.validateFields();
@@ -25,7 +26,7 @@ class CommentForm extends Component {
         // Tipo setState, mas específico do Ant Design
         this.props.form.setFieldsValue({
           author: '',
-          text: ''
+          body: ''
         })
       }
     });
@@ -37,7 +38,7 @@ class CommentForm extends Component {
     dispatch(handleAddComment({
       id: generateID(),
       timestamp: new Date().getTime(),
-      body: values.text,
+      body: values.body,
       author: values.author,
       parentId: this.props.postId,
     }))
@@ -66,7 +67,7 @@ class CommentForm extends Component {
 
     // Mostra error nos campos somente após ter foco
     const authorError = isFieldTouched('author') && getFieldError('author');
-    const textError = isFieldTouched('text') && getFieldError('text');
+    const bodyError = isFieldTouched('body') && getFieldError('body');
 
     return (
       <div>
@@ -80,10 +81,10 @@ class CommentForm extends Component {
             )}
           </FormItem>
           <FormItem
-            validateStatus={textError ? 'error' : ''}
-            help={textError || ''}
+            validateStatus={bodyError ? 'error' : ''}
+            help={bodyError || ''}
           >
-            {getFieldDecorator('text', { rules: [{ required: true }], setFieldsValue: this.props.form.setFieldsValue })(
+            {getFieldDecorator('body', { rules: [{ required: true }], setFieldsValue: this.props.form.setFieldsValue })(
               <TextArea autosize={{ minRows: 6 }} placeholder="Leave a great comment here" />
             )}
           </FormItem>
