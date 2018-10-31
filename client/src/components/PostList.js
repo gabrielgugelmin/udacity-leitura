@@ -23,6 +23,12 @@ class PostList extends Component {
     }
   }
 
+  componentWillReceiveProps() {
+    this.setState({
+      loading: false,
+    })
+  }
+
   handleOrder = (e) => {
     e.preventDefault();
     const value = e.target.value;
