@@ -91,7 +91,7 @@ class PostList extends Component {
 
 function mapStateToProps({ posts, sort }) {
   return {
-    posts: Object.values(posts)
+    posts: Object.values(posts).filter(p => p.deleted === false)
       .sort((a, b) => {
         if (sort.sortBy === 'date') {
           if (sort.isAscending) {

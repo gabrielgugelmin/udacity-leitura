@@ -98,7 +98,13 @@ class App extends Component {
                 )} />
               </Switch>
             </Content>
-            <Footer>footer</Footer>
+            <Footer>
+              <Row gutter={24}>
+                <Col className="gutter-row" span={14} offset={2}>
+                  <a href="https://github.com/gabrielgugelmin/udacity-leitura" target="_blank">gabrielgugelmin</a>
+                </Col>
+              </Row>
+            </Footer>
           </Layout>
         </div>
       </Router>
