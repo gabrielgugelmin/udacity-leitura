@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Layout, Col, Row } from 'antd';
 
 // Obtém os dados iniciais necessários para a aplicação
@@ -17,6 +17,7 @@ import PostList from './PostList';
 // Estilos
 import 'antd/dist/antd.css';
 import '../style/style.scss';
+import PageNotFound from './PageNotFound';
 
 class App extends Component {
 

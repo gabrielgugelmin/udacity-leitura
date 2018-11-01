@@ -30,12 +30,7 @@ class PostActions extends Component {
 
     // Se não estiver na home, manda pra lá
     if (this.props.match.path !== '/') {
-      setTimeout(() => {
-        this.setState({
-            toHome: true,
-          })
-        }, 500
-      )
+      this.props.history.push('/');
     }
   }
 
