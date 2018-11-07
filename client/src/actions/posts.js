@@ -6,6 +6,14 @@ export const DELETE_POST   = 'DELETE_POST';
 export const GET_POST      = 'GET_POST';
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const VOTE_POST     = 'VOTE_POST';
+export const SEARCH_POSTS  = 'SEARCH_POSTS';
+
+export function searchPosts(query) {
+  return {
+    type: SEARCH_POSTS,
+    query,
+  }
+}
 
 function receivePost(post) {
   return {

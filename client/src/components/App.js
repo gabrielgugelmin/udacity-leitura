@@ -13,11 +13,11 @@ import PostDetail from './PostDetail';
 import NewPostButton from './NewPostButton';
 import Post from './Post';
 import PostList from './PostList';
+import SearchBar from './Search';
 
 // Estilos
 import 'antd/dist/antd.css';
 import '../style/style.scss';
-import PageNotFound from './PageNotFound';
 
 class App extends Component {
 
@@ -34,8 +34,11 @@ class App extends Component {
           <Layout className="layout">
             <Header className="header">
               <Row gutter={24}>
-                <Col className="gutter-row" span={14} offset={2}>
-                  <Logo />
+                <Col className="gutter-row" span={20} offset={2}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Logo />
+                    <SearchBar filterPosts={this.filterPosts}/>
+                  </div>
                 </Col>
               </Row>
             </Header>
@@ -50,6 +53,15 @@ class App extends Component {
                     <Col className="gutter-row" span={6}>
                       <NewPostButton />
                       <CategoriesList />
+                    </Col>
+                  </Row>
+                )} />
+
+                <Route exact path="/search/:query" render={(props) => (
+                  <Row gutter={24}>
+                    <Col className="gutter-row" span={14} offset={2}>
+                      <h2>Search Result:</h2>
+                      <PostList {...props}/>
                     </Col>
                   </Row>
                 )} />

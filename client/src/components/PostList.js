@@ -13,7 +13,16 @@ class PostList extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(handleGetPosts(this.props.match.params.category));
+
+    // Se vier da página de busca, os posts já foram obtidos
+    // Caso contrário, deve buscar os posts
+    if (this.props.match.path === '/search/:query') {
+      this.setState({
+        loading: false,
+      })
+    } else {
+      dispatch(handleGetPosts(this.props.match.params.category));
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -39,6 +48,14 @@ class PostList extends Component {
 
   render() {
     const { posts, sort } = this.props;
+    // let posts = this.props.posts;
+
+    // if(this.props.match.path === '/search/:query') {
+    //   console.log('oi');
+    //   posts = this.props.location.state.postsResult;
+    //   console.log(posts);
+    // }
+
     return (
       <div className="timeline">
         <Skeleton loading={this.state.loading} active>
