@@ -18,6 +18,7 @@ import SearchBar from './SearchBar';
 // Estilos
 import 'antd/dist/antd.css';
 import '../style/style.scss';
+import PageNotFound from './PageNotFound';
 
 class App extends Component {
 
@@ -84,6 +85,15 @@ class App extends Component {
                   </Row>
                 )} />
 
+                {/* 404 */}
+                <Route path="/404" render={() => (
+                  <Row gutter={24}>
+                    <Col className="gutter-row" span={20} offset={2}>
+                      <PageNotFound />
+                    </Col>
+                  </Row>
+                )} />
+
                 {/* CATEGORIES */}
                 <Route exact path="/:category" render={(props) => (
                   <Row gutter={24}>
@@ -109,12 +119,13 @@ class App extends Component {
                     </Col>
                   </Row>
                 )} />
+
               </Switch>
             </Content>
             <Footer>
               <Row gutter={24}>
                 <Col className="gutter-row" span={14} offset={2}>
-                  <a href="https://github.com/gabrielgugelmin/udacity-leitura" target="_blank">gabrielgugelmin</a>
+                  <a href="https://github.com/gabrielgugelmin/udacity-leitura" target="_blank" rel="noopener noreferrer">gabrielgugelmin</a>
                 </Col>
               </Row>
             </Footer>

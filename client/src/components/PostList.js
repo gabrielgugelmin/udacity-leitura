@@ -48,13 +48,6 @@ class PostList extends Component {
 
   render() {
     const { posts, sort } = this.props;
-    // let posts = this.props.posts;
-
-    // if(this.props.match.path === '/search/:query') {
-    //   console.log('oi');
-    //   posts = this.props.location.state.postsResult;
-    //   console.log(posts);
-    // }
 
     return (
       <div className="timeline">

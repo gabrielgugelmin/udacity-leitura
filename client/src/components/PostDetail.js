@@ -14,13 +14,20 @@ class PostDetail extends Component {
   }
 
   componentDidMount() {
+    console.log('componentDidMount', this.props);
     const { id } = this.props.match.params;
     const { dispatch } = this.props;
     dispatch(handleGetPost(id));
+
+    if (this.props.post === undefined) {
+      this.props.history.push('/404');
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     const { id, author, body, category, timestamp, title, voteScore, vote } = nextProps.post;
+
+    console.log('componentWillReceiveProps', nextProps);
 
     this.setState({
       post: {
@@ -70,7 +77,8 @@ class PostDetail extends Component {
 }
 
 const mapStateToProps = ({ posts }, props) => {
-  const { id } = props.match.params
+  const { id } = props.match.params;
+
   return {
     post: posts[id]
   }
