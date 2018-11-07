@@ -118,6 +118,7 @@ function votePost({ id, vote }) {
 
 export function handleVotePost(info) {
   return (dispatch) => {
+    console.log('info', info)
     dispatch(votePost(info));
 
     return saveVote(info)

@@ -34,7 +34,6 @@ export default function posts(state = {}, action) {
           }
         } else if (computedVote === 'downVote') {
           if (action.vote.option === 'upVote') {
-            console.log('ja votou downVote e ta votando upVote');
             // upVote
             // Então adiciona 1 pelo upVote atual e mais 1 pela retirada do downVote atual
             updatedScore += 2;

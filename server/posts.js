@@ -12,7 +12,8 @@ const defaultData = {
     category: 'react',
     voteScore: 6,
     deleted: false,
-    commentCount: 2
+    commentCount: 2,
+    vote: null,
   },
   "6ni6ok3ym7mf1p33lnez": {
     id: '6ni6ok3ym7mf1p33lnez',
@@ -23,7 +24,8 @@ const defaultData = {
     category: 'redux',
     voteScore: -5,
     deleted: false,
-    commentCount: 0
+    commentCount: 0,
+    vote: null,
   },
   "8ki6ok3ym7mf1p33lnez": {
     id: '8ki6ok3ym7mf1p33lnez',
@@ -32,9 +34,10 @@ const defaultData = {
     body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis molestiae et mollitia atque praesentium omnis, facilis minima voluptas dicta nesciunt aliquam vitae numquam facere commodi debitis repellat sunt vel perspiciatis.',
     author: 'gabdasgalaxia',
     category: 'udacity',
-    voteScore: 1204,
+    voteScore: 12,
     deleted: false,
-    commentCount: 102
+    commentCount: 0,
+    vote: null,
   }
 }
 
@@ -97,21 +100,42 @@ function add (token, post) {
 
 function vote (token, id, option) {
   return new Promise((res) => {
-    console.log('id', id),
-    console.log('option', option)
-    let posts = getData(token)
-    post = posts[id]
-    switch(option) {
-        case "upVote":
-            post.voteScore = post.voteScore + 1
-            break
-        case "downVote":
-            post.voteScore = post.voteScore - 1
-            break
-        default:
-            console.log(`posts.vote received incorrect parameter: ${option}`)
+    if (option === 'upVote' || option === 'downVote') {
+      let posts = getData(token);
+      post = posts[id];
+      const computedVote = post.vote;
+
+      if (computedVote === 'upVote') {
+        if (option === 'upVote') {
+          // Remove o voto
+          post.voteScore--;
+          post.vote = null;
+        } else {
+          // downVote
+          // Então tira 1 pelo upVote anterior e mais 1 pelo downVote atual
+          post.voteScore -= 2;
+          post.vote = 'downVote';
+        }
+      } else if (computedVote === 'downVote') {
+        if (option === 'upVote') {
+          // upVote
+          // Então adiciona 1 pelo upVote atual e mais 1 pela retirada do downVote atual
+          post.voteScore += 2;
+          post.vote = 'upVote';
+        } else {
+          // Remove o voto
+          post.voteScore++;
+          post.vote = null;
+        }
+      } else {
+        option === 'upVote' ? post.voteScore++ : post.voteScore--;
+        post.vote = option;
+      }
+
+      res(post);
+    } else {
+      console.log(`posts.vote received incorrect parameter: ${option}`)
     }
-    res(post)
   })
 }
 
