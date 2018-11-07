@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Layout, Col, Row } from 'antd';
 
 // Obtém os dados iniciais necessários para a aplicação
@@ -13,7 +13,7 @@ import PostDetail from './PostDetail';
 import NewPostButton from './NewPostButton';
 import Post from './Post';
 import PostList from './PostList';
-import SearchBar from './Search';
+import SearchBar from './SearchBar';
 
 // Estilos
 import 'antd/dist/antd.css';
@@ -37,7 +37,7 @@ class App extends Component {
                 <Col className="gutter-row" span={20} offset={2}>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <Logo />
-                    <SearchBar filterPosts={this.filterPosts}/>
+                    <SearchBar filterPosts={this.filterPosts} />
                   </div>
                 </Col>
               </Row>

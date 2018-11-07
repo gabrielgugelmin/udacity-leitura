@@ -28,9 +28,7 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <span>
-        <Search onSearch={this.handleSearch} />
-      </span>
+      <Search onSearch={this.handleSearch} style={{ marginLeft: '24px', width: '100%' }} placeholder="Search posts by title" />
     );
   }
 }
