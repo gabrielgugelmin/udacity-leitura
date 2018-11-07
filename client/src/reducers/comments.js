@@ -31,12 +31,8 @@ export default function comments(state = {}, action) {
       }
     case VOTE_COMMENT:
       let updatedScore = state[action.id].voteScore;
+      action.vote.option === 'upVote' ? updatedScore++ : updatedScore--;
 
-      if (action.vote.option === 'upVote') {
-        updatedScore++;
-      } else if (action.vote.option === 'downVote') {
-        updatedScore--;
-      }
       return {
         ...state,
         [action.id]: {
